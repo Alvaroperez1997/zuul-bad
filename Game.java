@@ -46,13 +46,13 @@ public class Game
         salida = new Room("Has llegado a la ultima sala donde esta el jefe final");
         
         // initialise room exits
-        entrada.setExits(sala1, null, sala3, sala2, null);
-        sala1.setExits(null, null, null, entrada, null);
-        sala2.setExits(entrada, sala3, sala5, null, null);
-        sala3.setExits(null, sala4, null, sala5, sala2);
-        sala4.setExits(salida, null, null, null, sala5);
-        sala5.setExits(sala3, null, null, null, null);
-        salida.setExits(null, null, null, sala4, null);
+        entrada.setExits(sala1, null, null, sala3, sala2, null);
+        sala1.setExits(null, null, null, null, entrada, null);
+        sala2.setExits(entrada, null, sala3, sala5, null, null);
+        sala3.setExits(null, salida, sala4, null, sala5, sala2);
+        sala4.setExits(salida, null, null, null, null, sala5);
+        sala5.setExits(sala3, sala4, null, null, null, null);
+        salida.setExits(null, null, null, null, sala4, null);
 
         currentRoom = entrada;  // start game outside
     }
@@ -169,6 +169,7 @@ public class Game
      */
     private void printLocalitationInfo(){
         System.out.println("You are " + currentRoom.getDescription());
+        System.out.println();
         System.out.println(currentRoom.getExitString());
     }
 
