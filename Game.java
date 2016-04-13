@@ -46,13 +46,22 @@ public class Game
         salida = new Room("Has llegado a la ultima sala donde esta el jefe final");
         
         // initialise room exits
-        entrada.setExits(sala1, null, null, sala3, sala2, null);
-        sala1.setExits(null, null, null, null, entrada, null);
-        sala2.setExits(entrada, null, sala3, sala5, null, null);
-        sala3.setExits(null, salida, sala4, null, sala5, sala2);
-        sala4.setExits(salida, null, null, null, null, sala5);
-        sala5.setExits(sala3, sala4, null, null, null, null);
-        salida.setExits(null, null, null, null, sala4, null);
+        entrada.setExits("north", sala1);
+        entrada.setExits("southeast", sala3);
+        entrada.setExits("south", sala2);
+        sala1.setExits("south", entrada);
+        sala2.setExits("north", entrada);
+        sala2.setExits("east", sala3);
+        sala2.setExits("southeast", sala5);
+        sala3.setExits("northeast", salida);
+        sala3.setExits("east", sala4);
+        sala3.setExits("south", sala5);
+        sala3.setExits("west", sala2);
+        sala4.setExits("north", salida);
+        sala4.setExits("west", sala3);
+        sala5.setExits("north", sala3);
+        sala5.setExits("northeast", sala4);
+        salida.setExits("south", sala4);
 
         currentRoom = entrada;  // start game outside
     }
@@ -85,8 +94,6 @@ public class Game
         System.out.println("World of Zuul is a new, incredibly boring adventure game.");
         System.out.println("Type 'help' if you need help.");
         System.out.println();
-        System.out.println("You are " + currentRoom.getDescription());
-        System.out.print("Exits: ");
         printLocalitationInfo();
         System.out.println();
     }
@@ -157,8 +164,6 @@ public class Game
         }
         else {
             currentRoom = nextRoom;
-            System.out.println("You are " + currentRoom.getDescription());
-            System.out.print("Exits: ");
             printLocalitationInfo();
             System.out.println();
         }
@@ -170,6 +175,7 @@ public class Game
     private void printLocalitationInfo(){
         System.out.println("You are " + currentRoom.getDescription());
         System.out.println();
+        System.out.println("Exits: ");
         System.out.println(currentRoom.getExitString());
     }
 
