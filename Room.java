@@ -34,7 +34,7 @@ public class Room
     public Room getExit(String direccion){
         return salidas.get(direccion);
     }
-    
+
     public void setExits(String direction, Room nextRoom){
         salidas.put(direction, nextRoom);
     }
@@ -60,5 +60,15 @@ public class Room
             salida += direccion + " ";
         }
         return salida;
+    }
+
+    /**
+     * Return a long description of this room, of the form:
+     *     You are in the 'name of room'
+     *     Exits: north west southwest
+     * @return A description of the room, including exits.
+     */
+    public String getLongDescription(){
+        return "You are " + description + ".\n" + getExitString();
     }
 }
