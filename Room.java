@@ -1,5 +1,4 @@
 import java.util.HashMap;
-import java.util.Set;
 /**
  * Class Room - a room in an adventure game.
  *
@@ -32,11 +31,35 @@ public class Room
     }
 
     public Room getExit(String direccion){
-        return salidas.get(direccion);
+        Room currentRoom = null;
+        if(direccion.equals("north")){
+            currentRoom = salidas.get("north");
+        }
+        if(direccion.equals("northeast")){
+            currentRoom = salidas.get("northeast");
+        }
+        if(direccion.equals("east")){
+            currentRoom = salidas.get("east");
+        }
+        if(direccion.equals("southeast")){
+            currentRoom = salidas.get("southeast");
+        }
+        if(direccion.equals("south")){
+            currentRoom = salidas.get("south");
+        }
+        if(direccion.equals("west")){
+            currentRoom = salidas.get("west");
+        }
+        return currentRoom;
     }
 
-    public void setExits(String direction, Room nextRoom){
-        salidas.put(direction, nextRoom);
+    /**
+     * Define an exit from this room.
+     * @param direction The direction of the exit.
+     * @param neighbor The room in the given direction.
+     */
+    public void setExits(String direction, Room neighbor){
+        salidas.put(direction, neighbor);
     }
 
     /**
@@ -54,21 +77,27 @@ public class Room
      * @ return A description of the available exits.
      */
     public String getExitString(){
-        Set<String> direcciones = salidas.keySet();
-        String salida = "Exit: ";
-        for(String direccion : direcciones){
-            salida += direccion + " ";
+        String salida = "Exits: ";
+        if(salidas.get("north") != null) {
+            salida += "north ";
+        }
+        if(salidas.get("northeast") != null) {
+            salida += "northeast ";
+        }
+        if(salidas.get("east") != null) {
+            salida += "east ";
+        }
+        if(salidas.get("southeast") != null) {
+            salida += "southeast ";
+        }
+        if(salidas.get("south") != null) {
+            salida += "south ";
+        }
+        if(salidas.get("west") != null) {
+            salida += "west ";
         }
         return salida;
     }
-
-    /**
-     * Return a long description of this room, of the form:
-     *     You are in the 'name of room'
-     *     Exits: north west southwest
-     * @return A description of the room, including exits.
-     */
-    public String getLongDescription(){
-        return "You are " + description + ".\n" + getExitString();
-    }
 }
+
+

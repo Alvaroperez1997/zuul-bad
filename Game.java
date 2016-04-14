@@ -173,8 +173,10 @@ public class Game
      * metodo que imprime la informacion
      */
     private void printLocalitationInfo(){
-        System.out.println(currentRoom.getLongDescription());
+        System.out.println("You are " + currentRoom.getDescription());
         System.out.println();
+        System.out.println("Exits: ");
+        System.out.println(currentRoom.getExitString());
     }
 
     /** 
@@ -193,3 +195,4 @@ public class Game
         }
     }
 }
+
