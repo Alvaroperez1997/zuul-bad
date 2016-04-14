@@ -37,7 +37,7 @@ public class Game
         Room entrada, sala1, sala2, sala3, sala4, sala5, salida;
       
         // create the rooms
-        entrada = new Room("Entrada");
+        entrada = new Room("Entrada de la cueva");
         sala1 = new Room("Primera sala");
         sala2 = new Room("Segunda sala");
         sala3 = new Room("Tercera sala");
@@ -123,7 +123,7 @@ public class Game
             wantToQuit = quit(command);
         }
         else if (commandWord.equals("look")){
-            currentRoom.getLongDescription();
+            System.out.print(currentRoom.getLongDescription());
         }
 
         return wantToQuit;
