@@ -124,6 +124,7 @@ public class Game
         }
         else if (commandWord.equals("look")){
             System.out.print(currentRoom.getLongDescription());
+            currentRoom.getLongDescriptionWithItem();
         }
         else if (commandWord.equals("eat")) {
             System.out.println("You have eaten now and you are not hungry any more");

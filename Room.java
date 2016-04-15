@@ -1,4 +1,5 @@
 import java.util.HashMap;
+import java.util.Set;
 /**
  * Class Room - a room in an adventure game.
  *
@@ -17,6 +18,8 @@ public class Room
 {
     String description;
     private HashMap<String, Room> salidas;
+    private String descriptionItem;
+    private float peso;
 
     /**
      * Create a room described "description". Initially, it has
@@ -30,27 +33,18 @@ public class Room
         salidas = new HashMap<String, Room>();
     }
 
+    /**
+     * Constructor que crea las salas con un item
+     */
+    public Room(String description, String descriptionItem, float peso){
+        this.description = description;
+        salidas = new HashMap<String, Room>();
+        this.descriptionItem = descriptionItem;
+        this.peso = peso;
+    }
+
     public Room getExit(String direccion){
-        Room currentRoom = null;
-        if(direccion.equals("north")){
-            currentRoom = salidas.get("north");
-        }
-        if(direccion.equals("northeast")){
-            currentRoom = salidas.get("northeast");
-        }
-        if(direccion.equals("east")){
-            currentRoom = salidas.get("east");
-        }
-        if(direccion.equals("southeast")){
-            currentRoom = salidas.get("southeast");
-        }
-        if(direccion.equals("south")){
-            currentRoom = salidas.get("south");
-        }
-        if(direccion.equals("west")){
-            currentRoom = salidas.get("west");
-        }
-        return currentRoom;
+        return salidas.get(direccion);
     }
 
     public void setExits(String direction, Room nextRoom){
@@ -72,24 +66,10 @@ public class Room
      * @ return A description of the available exits.
      */
     public String getExitString(){
-        String salida = "Exits: ";
-        if(salidas.get("north") != null) {
-            salida += "north ";
-        }
-        if(salidas.get("northeast") != null) {
-            salida += "northeast ";
-        }
-        if(salidas.get("east") != null) {
-            salida += "east ";
-        }
-        if(salidas.get("southeast") != null) {
-            salida += "southeast ";
-        }
-        if(salidas.get("south") != null) {
-            salida += "south ";
-        }
-        if(salidas.get("west") != null) {
-            salida += "west ";
+        Set<String> direcciones = salidas.keySet();
+        String salida = "Exit: ";
+        for(String direccion : direcciones){
+            salida += direccion + " ";
         }
         return salida;
     }
@@ -102,5 +82,18 @@ public class Room
      */
     public String getLongDescription(){
         return "You are " + description + ".\n" + getExitString() + ".\n";
+    }
+
+    /**
+     * Muestra por pantalla los datos con las descripciones de las habitaciones y los item
+     */
+    public void getLongDescriptionWithItem(){
+        if (descriptionItem != null){
+            System.out.println(descriptionItem);
+            System.out.println(peso);
+        }
+        else{
+            System.out.println("No existen items en esta sala");
+        }
     }
 }
