@@ -1,5 +1,6 @@
 import java.util.HashMap;
 import java.util.Set;
+import java.util.ArrayList;
 /**
  * Class Room - a room in an adventure game.
  *
@@ -18,8 +19,7 @@ public class Room
 {
     String description;
     private HashMap<String, Room> salidas;
-    private String descriptionItem;
-    private float peso;
+    private ArrayList<Item> listaItem;
 
     /**
      * Create a room described "description". Initially, it has
@@ -31,16 +31,14 @@ public class Room
     {
         this.description = description;
         salidas = new HashMap<String, Room>();
+        listaItem = new ArrayList<Item>();
     }
-
+    
     /**
-     * Constructor que crea las salas con un item
+     * Añade un item a el objeto Room sobre el que se invoca
      */
-    public Room(String description, String descriptionItem, float peso){
-        this.description = description;
-        salidas = new HashMap<String, Room>();
-        this.descriptionItem = descriptionItem;
-        this.peso = peso;
+    public void addItem(Item item){
+        listaItem.add(item);
     }
 
     public Room getExit(String direccion){
@@ -81,19 +79,16 @@ public class Room
      * @return A description of the room, including exits.
      */
     public String getLongDescription(){
-        return "You are " + description + ".\n" + getExitString() + ".\n";
-    }
-
-    /**
-     * Muestra por pantalla los datos con las descripciones de las habitaciones y los item
-     */
-    public void getLongDescriptionWithItem(){
-        if (descriptionItem != null){
-            System.out.println(descriptionItem);
-            System.out.println(peso);
+        String longDescription = "You are " + description + ".\n" + getExitString() + ".\n";
+        System.out.println("");
+        if (listaItem.size() != 0){
+            for(Item object : listaItem){
+                longDescription += "Nombre del objeto: " + object.getDescriptionItem() + " Peso: " + object.getPeso() + ".\n";
+            }
         }
         else{
-            System.out.println("No existen items en esta sala");
+            longDescription += "No existen items en esta sala" + ".\n";
         }
+        return longDescription;
     }
 }

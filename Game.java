@@ -35,14 +35,26 @@ public class Game
     private void createRooms()
     {
         Room entrada, sala1, sala2, sala3, sala4, sala5, salida;
-      
+        
+        // create items
+        Item item1 = new Item("Espada", 50);
+        Item item2 = new Item("Escudo", 60);
+        Item item3 = new Item("Armadura", 80);
+        Item item4 = new Item("Poción", 5);
+        Item item5 = new Item("Amuleto", 6);
+        
         // create the rooms
         entrada = new Room("Entrada de la cueva");
         sala1 = new Room("Primera sala");
+        sala1.addItem(item1);
+        sala1.addItem(item3);
         sala2 = new Room("Segunda sala");
+        sala2.addItem(item2);
         sala3 = new Room("Tercera sala");
         sala4 = new Room("Cuarta sala");
         sala5 = new Room("Quinta sala");
+        sala5.addItem(item4);
+        sala5.addItem(item5);
         salida = new Room("Has llegado a la ultima sala donde esta el jefe final");
         
         // initialise room exits
@@ -124,7 +136,6 @@ public class Game
         }
         else if (commandWord.equals("look")){
             System.out.print(currentRoom.getLongDescription());
-            currentRoom.getLongDescriptionWithItem();
         }
         else if (commandWord.equals("eat")) {
             System.out.println("You have eaten now and you are not hungry any more");
