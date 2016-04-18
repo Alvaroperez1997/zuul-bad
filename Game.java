@@ -19,6 +19,7 @@ public class Game
 {
     private Parser parser;
     private Room currentRoom;
+    private Room anteriorRoom;
         
     /**
      * Create the game and initialise its internal map.
@@ -131,6 +132,9 @@ public class Game
         else if (commandWord.equals("go")) {
             goRoom(command);
         }
+        else if (commandWord.equals("back")) {
+            goBack();
+        }
         else if (commandWord.equals("quit")) {
             wantToQuit = quit(command);
         }
@@ -166,6 +170,7 @@ public class Game
      */
     private void goRoom(Command command) 
     {
+        anteriorRoom = currentRoom;
         if(!command.hasSecondWord()) {
             // if there is no second word, we don't know where to go...
             System.out.println("Go where?");
@@ -182,6 +187,17 @@ public class Game
         }
         else {
             currentRoom = nextRoom;
+            printLocalitationInfo();
+            System.out.println();
+        }
+    }
+    
+    private void goBack(){
+        if (anteriorRoom == null || anteriorRoom == currentRoom) {
+            System.out.println("No es posible volver a la localizacion anterior");
+        }
+        else{
+            currentRoom = anteriorRoom;
             printLocalitationInfo();
             System.out.println();
         }
