@@ -21,6 +21,7 @@ public class Game
     private Parser parser;
     private Room currentRoom;
     private Stack<Room> pila;
+    private Player player;
         
     /**
      * Create the game and initialise its internal map.
@@ -30,6 +31,7 @@ public class Game
         createRooms();
         parser = new Parser();
         pila = new Stack<>();
+        player = new Player();
     }
 
     /**
@@ -40,11 +42,11 @@ public class Game
         Room entrada, sala1, sala2, sala3, sala4, sala5, salida;
         
         // create items
-        Item item1 = new Item("Espada", 50);
-        Item item2 = new Item("Escudo", 60);
-        Item item3 = new Item("Armadura", 80);
-        Item item4 = new Item("Poción", 5);
-        Item item5 = new Item("Amuleto", 6);
+        Item item1 = new Item("espada", 50);
+        Item item2 = new Item("escudo", 60);
+        Item item3 = new Item("armadura", 80);
+        Item item4 = new Item("pocion", 5);
+        Item item5 = new Item("amuleto", 6);
         
         // create the rooms
         entrada = new Room("Entrada de la cueva");
@@ -146,6 +148,9 @@ public class Game
         else if (commandWord.equals("eat")) {
             System.out.println("You have eaten now and you are not hungry any more");
         }
+        else if (commandWord.equals("take")) {
+            takeItem(command);
+        }
 
         return wantToQuit;
     }
@@ -191,6 +196,24 @@ public class Game
             currentRoom = nextRoom;
             printLocalitationInfo();
             System.out.println();
+        }
+    }
+    
+    private void takeItem(Command command) {
+        if(!command.hasSecondWord()) {
+            // if there is no second word, we don't know where to go...
+            System.out.println("Coger que?");
+            return;
+        }
+        
+        String descriptionItem = command.getSecondWord();
+        
+        Item item = currentRoom.removeItem(descriptionItem);
+        if (item == null) {
+            System.out.println("No hay ningun item con ese nombre en la room!");
+        }
+        else {
+            player.addItem(item);
         }
     }
     

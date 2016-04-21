@@ -33,12 +33,26 @@ public class Room
         salidas = new HashMap<String, Room>();
         listaItem = new ArrayList<Item>();
     }
-    
+
     /**
      * Añade un item a el objeto Room sobre el que se invoca
      */
     public void addItem(Item item){
         listaItem.add(item);
+    }
+
+    /**
+     * Elimina un Item de la room y lo devuelve
+     */
+    public Item removeItem(String nameItem){
+        Item itemEliminado = null;
+        for (int i = 0; i < listaItem.size(); i++) {
+            if (listaItem.get(i).getDescriptionItem().equals(nameItem)) {
+                itemEliminado = listaItem.get(i);
+                listaItem.remove(i);
+            }
+        }
+        return itemEliminado;
     }
 
     public Room getExit(String direccion){
