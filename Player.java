@@ -9,6 +9,8 @@ public class Player
 {
     // instance variables - replace the example below with your own
     private ArrayList<Item> listPlayer;
+    public static final float limitePeso = 150;
+    private float pesoBolsa;
 
     /**
      * Constructor for objects of class Player
@@ -16,6 +18,14 @@ public class Player
     public Player()
     {
         listPlayer = new ArrayList<Item>();
+        pesoBolsa = 0;
+    }
+    
+    /**
+     * Fija el valor del peso del player
+     */
+    public void setPesoBolsa(float peso) {
+        pesoBolsa += peso;
     }
 
     /**
@@ -24,5 +34,36 @@ public class Player
     public void addItem(Item item)
     {
         listPlayer.add(item);
-   }
+        setPesoBolsa(item.getPeso());
+    }
+    
+    /**
+     * Devuelve el peso que lleva
+     */
+    public float getPesoBolsa()
+    {
+        return pesoBolsa;
+    }
+    
+    /**
+     * Busqueda del Item que desea
+     */
+    public Item findItem(String description){
+        Item itemEncontrado = null;
+        for (Item object : listPlayer) {
+            if (object.getDescriptionItem().equals(description)) {
+                itemEncontrado = object;
+            }
+        }
+        return itemEncontrado;
+    }
+    
+    /**
+     * Borra el item de la lista de item del jugador
+     */
+    public void dropItem(Item item) {
+        if (item != null) {
+            listPlayer.remove(item);
+        }
+    }
 }

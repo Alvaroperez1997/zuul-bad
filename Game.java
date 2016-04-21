@@ -199,6 +199,9 @@ public class Game
         }
     }
     
+    /**
+     * Añade un item a player y lo elimina de room
+     */
     private void takeItem(Command command) {
         if(!command.hasSecondWord()) {
             // if there is no second word, we don't know where to go...
@@ -208,12 +211,16 @@ public class Game
         
         String descriptionItem = command.getSecondWord();
         
-        Item item = currentRoom.removeItem(descriptionItem);
+        Item item = currentRoom.findItem(descriptionItem);
+        
         if (item == null) {
             System.out.println("No hay ningun item con ese nombre en la room!");
         }
+        else if(player.limitePeso >= (player.getPesoBolsa() + item.getPeso())) {
+            player.addItem(currentRoom.removeItem(item));
+        }
         else {
-            player.addItem(item);
+            System.out.println("El jugador lleva demasiado peso encima");
         }
     }
     

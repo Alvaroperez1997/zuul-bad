@@ -44,15 +44,25 @@ public class Room
     /**
      * Elimina un Item de la room y lo devuelve
      */
-    public Item removeItem(String nameItem){
-        Item itemEliminado = null;
-        for (int i = 0; i < listaItem.size(); i++) {
-            if (listaItem.get(i).getDescriptionItem().equals(nameItem)) {
-                itemEliminado = listaItem.get(i);
-                listaItem.remove(i);
-            }
+    public Item removeItem(Item item){
+        Item itemEliminado = item;
+        if (item != null) {
+            listaItem.remove(item);
         }
         return itemEliminado;
+    }
+
+    /**
+     * Busqueda de el item que se desea
+     */
+    public Item findItem(String description) {
+        Item itemEncontrado = null;
+        for (Item object : listaItem) {
+            if (object.getDescriptionItem().equals(description)) {
+                itemEncontrado = object;
+            }
+        }
+        return itemEncontrado;
     }
 
     public Room getExit(String direccion){
