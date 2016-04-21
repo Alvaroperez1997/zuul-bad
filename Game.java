@@ -154,7 +154,9 @@ public class Game
         else if (commandWord.equals("items")) {
             System.out.println(player.getItemDescription());
         }
-
+        else if (commandWord.equals("drop")) {
+            dropItem(command);
+        }
         return wantToQuit;
     }
 
@@ -227,6 +229,31 @@ public class Game
         }
     }
     
+    /**
+     * Elimina un elemento de player y lo añade a la room
+     */
+    private void dropItem(Command command) {
+        if(!command.hasSecondWord()) {
+            // if there is no second word, we don't know where to go...
+            System.out.println("Coger que?");
+            return;
+        }
+        
+        String descriptionItem = command.getSecondWord();
+        
+        Item item = player.findItem(descriptionItem);
+        
+        if (item == null) {
+            System.out.println("El jugador no tiene ningun item en la bolsa");
+        }
+        else {
+            currentRoom.addItem(player.dropItem(item));
+        }
+    }
+    
+    /**
+     * Vuelve a la habitacion anterior
+     */
     private void goBack(){
         if (pila.empty()) {
             System.out.println("No es posible volver a la localizacion anterior");

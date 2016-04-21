@@ -78,10 +78,11 @@ public class Player
     /**
      * Borra el item de la lista de item del jugador
      */
-    public void dropItem(Item item) {
+    public Item dropItem(Item item) {
+        Item itemDrop = item;
         if (item != null) {
             listPlayer.remove(item);
-            
         }
+        return itemDrop;
     }
 }
