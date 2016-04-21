@@ -59,11 +59,29 @@ public class Player
     }
     
     /**
+     * Muestra la lista de los items de player
+     */
+    public String getItemDescription() {
+        String itemDescription = "peso que lleva el jugador: " + getPesoBolsa() + ".\n" + "You have: " + "\n";
+        System.out.print("");
+        if (listPlayer.size() != 0){
+            for(Item object : listPlayer){
+                itemDescription += "Nombre del objeto: " + object.getDescriptionItem() + " Peso: " + object.getPeso() + ".\n";
+            }
+        }
+        else{
+            itemDescription += "La bolsa de items esta vacía" + ".\n";
+        }
+        return itemDescription;
+    }
+    
+    /**
      * Borra el item de la lista de item del jugador
      */
     public void dropItem(Item item) {
         if (item != null) {
             listPlayer.remove(item);
+            
         }
     }
 }

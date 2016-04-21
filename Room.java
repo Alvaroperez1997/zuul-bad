@@ -104,7 +104,7 @@ public class Room
      */
     public String getLongDescription(){
         String longDescription = "You are " + description + ".\n" + getExitString() + ".\n";
-        System.out.println("");
+        System.out.print("");
         if (listaItem.size() != 0){
             for(Item object : listaItem){
                 longDescription += "Nombre del objeto: " + object.getDescriptionItem() + " Peso: " + object.getPeso() + ".\n";

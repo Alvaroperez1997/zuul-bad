@@ -151,6 +151,9 @@ public class Game
         else if (commandWord.equals("take")) {
             takeItem(command);
         }
+        else if (commandWord.equals("items")) {
+            System.out.println(player.getItemDescription());
+        }
 
         return wantToQuit;
     }
