@@ -33,12 +33,36 @@ public class Room
         salidas = new HashMap<String, Room>();
         listaItem = new ArrayList<Item>();
     }
-    
+
     /**
      * Añade un item a el objeto Room sobre el que se invoca
      */
     public void addItem(Item item){
         listaItem.add(item);
+    }
+
+    /**
+     * Elimina un Item de la room y lo devuelve
+     */
+    public Item removeItem(Item item){
+        Item itemEliminado = item;
+        if (item != null) {
+            listaItem.remove(item);
+        }
+        return itemEliminado;
+    }
+
+    /**
+     * Busqueda de el item que se desea
+     */
+    public Item findItem(String description) {
+        Item itemEncontrado = null;
+        for (Item object : listaItem) {
+            if (object.getDescriptionItem().equals(description)) {
+                itemEncontrado = object;
+            }
+        }
+        return itemEncontrado;
     }
 
     public Room getExit(String direccion){
@@ -80,7 +104,7 @@ public class Room
      */
     public String getLongDescription(){
         String longDescription = "You are " + description + ".\n" + getExitString() + ".\n";
-        System.out.println("");
+        System.out.print("");
         if (listaItem.size() != 0){
             for(Item object : listaItem){
                 longDescription += "Nombre del objeto: " + object.getDescriptionItem() + " Peso: " + object.getPeso() + ".\n";
