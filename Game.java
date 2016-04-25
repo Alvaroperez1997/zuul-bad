@@ -1,4 +1,4 @@
-import java.util.Stack;
+
 /**
  *  This class is the main class of the "World of Zuul" application. 
  *  "World of Zuul" is a very simple, text based adventure game.  Users 
@@ -19,8 +19,6 @@ import java.util.Stack;
 public class Game 
 {
     private Parser parser;
-    private Room currentRoom;
-    private Stack<Room> pila;
     private Player player;
         
     /**
@@ -30,8 +28,6 @@ public class Game
     {
         createRooms();
         parser = new Parser();
-        pila = new Stack<>();
-        player = new Player();
     }
 
     /**
@@ -41,25 +37,18 @@ public class Game
     {
         Room entrada, sala1, sala2, sala3, sala4, sala5, salida;
         
-        // create items
-        Item item1 = new Item("espada", 50);
-        Item item2 = new Item("escudo", 60);
-        Item item3 = new Item("armadura", 80);
-        Item item4 = new Item("pocion", 5);
-        Item item5 = new Item("amuleto", 6);
-        
-        // create the rooms
+        // create the rooms and items
         entrada = new Room("Entrada de la cueva");
         sala1 = new Room("Primera sala");
-        sala1.addItem(item1);
-        sala1.addItem(item3);
+        sala1.addItem(new Item("espada", 50));
+        sala1.addItem(new Item("armadura", 80));
         sala2 = new Room("Segunda sala");
-        sala2.addItem(item2);
+        sala2.addItem(new Item("escudo", 60));
         sala3 = new Room("Tercera sala");
         sala4 = new Room("Cuarta sala");
         sala5 = new Room("Quinta sala");
-        sala5.addItem(item4);
-        sala5.addItem(item5);
+        sala5.addItem(new Item("pocion", 5));
+        sala5.addItem(new Item("amuleto", 6));
         salida = new Room("Has llegado a la ultima sala donde esta el jefe final");
         
         // initialise room exits
@@ -80,7 +69,7 @@ public class Game
         sala5.setExits("northeast", sala4);
         salida.setExits("south", sala4);
 
-        currentRoom = entrada;  // start game outside
+        player = new Player(entrada); //Crea el jugador
     }
 
     /**
@@ -111,7 +100,7 @@ public class Game
         System.out.println("World of Zuul is a new, incredibly boring adventure game.");
         System.out.println("Type 'help' if you need help.");
         System.out.println();
-        printLocalitationInfo();
+        player.printLocalitationInfo();
         System.out.println();
     }
 
@@ -134,28 +123,28 @@ public class Game
             printHelp();
         }
         else if (commandWord.equals("go")) {
-            goRoom(command);
+            player.goRoom(command);
         }
         else if (commandWord.equals("back")) {
-            goBack();
+            player.goBack();
         }
         else if (commandWord.equals("quit")) {
             wantToQuit = quit(command);
         }
         else if (commandWord.equals("look")){
-            System.out.print(currentRoom.getLongDescription());
+            System.out.print(player.getCurrentRoom().getLongDescription());
         }
         else if (commandWord.equals("eat")) {
             System.out.println("You have eaten now and you are not hungry any more");
         }
         else if (commandWord.equals("take")) {
-            takeItem(command);
+            player.takeItem(command);
         }
         else if (commandWord.equals("items")) {
             System.out.println(player.getItemDescription());
         }
         else if (commandWord.equals("drop")) {
-            dropItem(command);
+            player.dropItem(command);
         }
         return wantToQuit;
     }
@@ -174,103 +163,6 @@ public class Game
         System.out.println();
         System.out.println("Your command words are:");
         parser.getAllCommands();
-    }
-
-    /** 
-     * Try to go in one direction. If there is an exit, enter
-     * the new room, otherwise print an error message.
-     */
-    private void goRoom(Command command) 
-    {
-        if(!command.hasSecondWord()) {
-            // if there is no second word, we don't know where to go...
-            System.out.println("Go where?");
-            return;
-        }
-
-        String direction = command.getSecondWord();
-
-        // Try to leave current room.
-        Room nextRoom = currentRoom.getExit(direction);
-
-        if (nextRoom == null) {
-            System.out.println("There is no door!");
-        }
-        else {
-            pila.push(currentRoom);
-            currentRoom = nextRoom;
-            printLocalitationInfo();
-            System.out.println();
-        }
-    }
-    
-    /**
-     * Añade un item a player y lo elimina de room
-     */
-    private void takeItem(Command command) {
-        if(!command.hasSecondWord()) {
-            // if there is no second word, we don't know where to go...
-            System.out.println("Coger que?");
-            return;
-        }
-        
-        String descriptionItem = command.getSecondWord();
-        
-        Item item = currentRoom.findItem(descriptionItem);
-        
-        if (item == null) {
-            System.out.println("No hay ningun item con ese nombre en la room!");
-        }
-        else if(player.limitePeso >= (player.getPesoBolsa() + item.getPeso())) {
-            player.addItem(currentRoom.removeItem(item));
-        }
-        else {
-            System.out.println("El jugador lleva demasiado peso encima");
-        }
-    }
-    
-    /**
-     * Elimina un elemento de player y lo añade a la room
-     */
-    private void dropItem(Command command) {
-        if(!command.hasSecondWord()) {
-            // if there is no second word, we don't know where to go...
-            System.out.println("Coger que?");
-            return;
-        }
-        
-        String descriptionItem = command.getSecondWord();
-        
-        Item item = player.findItem(descriptionItem);
-        
-        if (item == null) {
-            System.out.println("El jugador no tiene ningun item en la bolsa");
-        }
-        else {
-            currentRoom.addItem(player.dropItem(item));
-            player.setPesoBolsaResto(item.getPeso());
-        }
-    }
-    
-    /**
-     * Vuelve a la habitacion anterior
-     */
-    private void goBack(){
-        if (pila.empty()) {
-            System.out.println("No es posible volver a la localizacion anterior");
-        }
-        else{
-            currentRoom = pila.pop();
-            printLocalitationInfo();
-            System.out.println();
-        }
-    }
-    
-    /**
-     * metodo que imprime la informacion
-     */
-    private void printLocalitationInfo(){
-        System.out.println(currentRoom.getLongDescription());
     }
 
     /** 
