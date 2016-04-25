@@ -248,6 +248,7 @@ public class Game
         }
         else {
             currentRoom.addItem(player.dropItem(item));
+            player.setPesoBolsaResto(item.getPeso());
         }
     }
     

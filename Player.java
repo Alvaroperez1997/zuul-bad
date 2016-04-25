@@ -27,6 +27,13 @@ public class Player
     public void setPesoBolsa(float peso) {
         pesoBolsa += peso;
     }
+    
+    /**
+     * Resta el peso del item a player
+     */
+    public void setPesoBolsaResto(float peso) {
+        pesoBolsa -= peso;
+    }
 
     /**
      * añade un Item de la room en la que se encuentra a la lista del jugador
