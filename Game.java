@@ -40,15 +40,16 @@ public class Game
         // create the rooms and items
         entrada = new Room("Entrada de la cueva");
         sala1 = new Room("Primera sala");
-        sala1.addItem(new Item("espada", 50));
-        sala1.addItem(new Item("armadura", 80));
+        sala1.addItem(new Item("espada", 50, false));
+        sala1.addItem(new Item("armadura", 80, false));
         sala2 = new Room("Segunda sala");
-        sala2.addItem(new Item("escudo", 60));
+        sala2.addItem(new Item("escudo", 60, false));
         sala3 = new Room("Tercera sala");
         sala4 = new Room("Cuarta sala");
+        sala4.addItem(new Item("vara", 20, true));
         sala5 = new Room("Quinta sala");
-        sala5.addItem(new Item("pocion", 5));
-        sala5.addItem(new Item("amuleto", 6));
+        sala5.addItem(new Item("pocion", 5, false));
+        sala5.addItem(new Item("amuleto", 6, false));
         salida = new Room("Has llegado a la ultima sala donde esta el jefe final");
         
         // initialise room exits
