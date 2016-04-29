@@ -109,6 +109,9 @@ public class Player
         if (item == null) {
             System.out.println("No hay ningun item con ese nombre en la room!");
         }
+        else if(item.getFijo()) {
+            System.out.println("Este objeto no se puede meter en la bolsa");
+        }
         else if(limitePeso >= (getPesoBolsa() + item.getPeso())) {
             addItem(currentRoom.removeItem(item));
         }

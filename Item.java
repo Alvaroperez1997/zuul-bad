@@ -10,14 +10,23 @@ public class Item
     // instance variables - replace the example below with your own
     private String descriptionItem;
     private float peso;
+    private boolean fijo;
 
     /**
      * Constructor for objects of class Item
      */
-    public Item(String descriptionItem, float peso)
+    public Item(String descriptionItem, float peso, boolean fijo)
     {
         this.descriptionItem = descriptionItem;
         this.peso = peso;
+        this.fijo = fijo;
+    }
+    
+    /**
+     * Devuelve el boolean de item
+     */
+    public boolean getFijo(){
+        return fijo;
     }
     
     /**
