@@ -119,32 +119,25 @@ public class Game
         }
 
         Option commandWord = command.getCommandWord();
-        if (commandWord == Option.HELP) {
-            printHelp();
-        }
-        else if (commandWord == Option.GO) {
-            player.goRoom(command);
-        }
-        else if (commandWord == Option.BACK) {
-            player.goBack();
-        }
-        else if (commandWord == Option.QUIT) {
-            wantToQuit = quit(command);
-        }
-        else if (commandWord == Option.LOOK){
-            System.out.print(player.getCurrentRoom().getLongDescription());
-        }
-        else if (commandWord == Option.EAT) {
-            System.out.println("You have eaten now and you are not hungry any more");
-        }
-        else if (commandWord == Option.TAKE) {
-            player.takeItem(command);
-        }
-        else if (commandWord == Option.ITEMS) {
-            System.out.println(player.getItemDescription());
-        }
-        else if (commandWord == Option.DROP) {
-            player.dropItem(command);
+        switch(commandWord) {
+            case HELP: printHelp();
+                break;
+            case GO: player.goRoom(command);
+                break;
+            case BACK: player.goBack();
+                break;
+            case QUIT: wantToQuit = quit(command);
+                break;
+            case LOOK: System.out.print(player.getCurrentRoom().getLongDescription());
+                break;
+            case EAT: System.out.println("You have eaten now and you are not hungry any more");
+                break;
+            case TAKE: player.takeItem(command);
+                break;
+            case ITEMS: System.out.println(player.getItemDescription());
+                break;
+            case DROP: player.dropItem(command);
+                break;
         }
         return wantToQuit;
     }
