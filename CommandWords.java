@@ -29,7 +29,7 @@ public class CommandWords
         commands.put("ritorno", Option.BACK);
         commands.put("prendere", Option.TAKE);
         commands.put("articoli", Option.ITEMS);
-        commands.put("lascoare", Option.DROP);
+        commands.put("lasciare", Option.DROP);
         commands.put("sconosciuto", Option.UNKNOWN);
     }
 
@@ -59,7 +59,7 @@ public class CommandWords
      *         if it is not a valid command word
      */
     public Option getCommandWord(String commandWord){
-        Option option = null;
+        Option option = Option.UNKNOWN;
         if (isCommand(commandWord)){
             option = commands.get(commandWord);
         }
