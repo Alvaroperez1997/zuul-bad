@@ -21,16 +21,16 @@ public class CommandWords
     public CommandWords()
     {
         commands = new HashMap<String, Option>();
-        commands.put("go", Option.GO);
-        commands.put("quit", Option.QUIT);
-        commands.put("help", Option.HELP);
-        commands.put("look", Option.LOOK);
-        commands.put("eat", Option.EAT);
-        commands.put("back", Option.BACK);
-        commands.put("take", Option.TAKE);
-        commands.put("items", Option.ITEMS);
-        commands.put("drop", Option.DROP);
-        commands.put("unknown", Option.UNKNOWN);
+        commands.put("andare", Option.GO);
+        commands.put("uscita", Option.QUIT);
+        commands.put("aiuto", Option.HELP);
+        commands.put("guardare", Option.LOOK);
+        commands.put("mangiare", Option.EAT);
+        commands.put("ritorno", Option.BACK);
+        commands.put("prendere", Option.TAKE);
+        commands.put("articoli", Option.ITEMS);
+        commands.put("lascoare", Option.DROP);
+        commands.put("sconosciuto", Option.UNKNOWN);
     }
 
     /**
