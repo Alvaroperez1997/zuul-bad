@@ -11,15 +11,17 @@ public class Item
     private String descriptionItem;
     private float peso;
     private boolean fijo;
+    private int resistencia;
 
     /**
      * Constructor for objects of class Item
      */
-    public Item(String descriptionItem, float peso, boolean fijo)
+    public Item(String descriptionItem, float peso, boolean fijo, int resistencia)
     {
         this.descriptionItem = descriptionItem;
         this.peso = peso;
         this.fijo = fijo;
+        this.resistencia = resistencia;
     }
     
     /**
@@ -41,5 +43,12 @@ public class Item
      */
     public float getPeso() {
         return peso;
+    }
+    
+    /**
+     * Devuelve la resistencia que aumenta a un jugador cuando se come
+     */
+    public int getResistencia(){
+        return resistencia;
     }
 }

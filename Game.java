@@ -40,21 +40,21 @@ public class Game
         // create the rooms and items
         entrada = new Room("Entrada de la cueva");
         sala1 = new Room("Primera sala");
-        sala1.addItem(new Item("espada", 50, false));
-        sala1.addItem(new Item("armadura", 80, false));
+        sala1.addItem(new Item("espada", 50, false, 0));
+        sala1.addItem(new Item("armadura", 80, false, 0));
         sala2 = new Room("Segunda sala");
-        sala2.addItem(new Item("escudo", 60, false));
+        sala2.addItem(new Item("escudo", 60, false, 0));
         sala3 = new Room("Tercera sala");
-        sala3.addItem(new Item("corazon", 5, false));
+        sala3.addItem(new Item("corazon", 5, false, 40));
         sala4 = new Room("Cuarta sala");
-        sala4.addItem(new Item("vara", 20, true));
+        sala4.addItem(new Item("vara", 20, true, 0));
         sala5 = new Room("Quinta sala");
-        sala5.addItem(new Item("pocion", 5, false));
-        sala5.addItem(new Item("amuleto", 6, false));
+        sala5.addItem(new Item("pocion", 5, false, 20));
+        sala5.addItem(new Item("amuleto", 6, false, 0));
         sala6 = new Room("Sexta sala");
-        sala6.addItem(new Item("galleta", 5, false));
+        sala6.addItem(new Item("galleta", 5, false, 10));
         sala7 = new Room("Septima sala");
-        sala7.addItem(new Item("llave", 4, false));
+        sala7.addItem(new Item("llave", 4, false, 0));
         salida = new Room("Has llegado a la ultima. Se ha acabado el juego");
         
         // initialise room exits
