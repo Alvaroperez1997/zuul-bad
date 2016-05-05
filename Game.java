@@ -35,7 +35,7 @@ public class Game
      */
     private void createRooms()
     {
-        Room entrada, sala1, sala2, sala3, sala4, sala5, salida;
+        Room entrada, sala1, sala2, sala3, sala4, sala5, sala6, sala7, salida;
         
         // create the rooms and items
         entrada = new Room("Entrada de la cueva");
@@ -45,12 +45,17 @@ public class Game
         sala2 = new Room("Segunda sala");
         sala2.addItem(new Item("escudo", 60, false));
         sala3 = new Room("Tercera sala");
+        sala3.addItem(new Item("corazon", 5, false));
         sala4 = new Room("Cuarta sala");
         sala4.addItem(new Item("vara", 20, true));
         sala5 = new Room("Quinta sala");
         sala5.addItem(new Item("pocion", 5, false));
         sala5.addItem(new Item("amuleto", 6, false));
-        salida = new Room("Has llegado a la ultima sala donde esta el jefe final");
+        sala6 = new Room("Sexta sala");
+        sala6.addItem(new Item("galleta", 5, false));
+        sala7 = new Room("Septima sala");
+        sala7.addItem(new Item("llave", 4, false));
+        salida = new Room("Has llegado a la ultima. Se ha acabado el juego");
         
         // initialise room exits
         entrada.setExits("north", sala1);
@@ -64,11 +69,17 @@ public class Game
         sala3.setExits("east", sala4);
         sala3.setExits("south", sala5);
         sala3.setExits("west", sala2);
-        sala4.setExits("north", salida);
+        sala4.setExits("north", sala6);
         sala4.setExits("west", sala3);
+        sala4.setExits("east", salida);
+        sala4.setExits("southwest", sala5);
         sala5.setExits("north", sala3);
         sala5.setExits("northeast", sala4);
-        salida.setExits("south", sala4);
+        sala5.setExits("northwest", sala2);
+        sala6.setExits("south", sala4);
+        sala6.setExits("southwest", sala3);
+        sala6.setExits("north", sala7);
+        sala7.setExits("south", sala6);
 
         player = new Player(entrada); //Crea el jugador
     }

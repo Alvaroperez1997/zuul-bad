@@ -204,4 +204,12 @@ public class Player
         }
         return itemDrop;
     }
+    
+    /**
+     * Tamaño del stack
+     */
+    public int tamaño(){
+        return salasAnteriores.size();
+    }
+    
 }
