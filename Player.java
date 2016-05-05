@@ -12,6 +12,7 @@ public class Player
     private ArrayList<Item> listPlayer;
     public static final float limitePeso = 150;
     private float pesoBolsa;
+    private int resistencia;
     private Room currentRoom;
     private Stack<Room> salasAnteriores;
 
@@ -22,6 +23,7 @@ public class Player
     {
         listPlayer = new ArrayList<Item>();
         pesoBolsa = 0;
+        resistencia = 100;
         salasAnteriores = new Stack<>();
         this.currentRoom = currentRoom; 
     }
@@ -34,7 +36,21 @@ public class Player
     }
     
     /**
-     * Fija el valor del peso del player
+     * Le suma la resistencia a la resistencia del jugador
+     */
+    public void setResistencia(int resistenciaAñadida){
+        resistencia += resistenciaAñadida;
+    }
+    
+    /**
+     * Resta la resistencia a la que tiene el jugador
+     */
+    public void setResistenciaResto(int resistenciaRestada){
+        resistencia -= resistenciaRestada;
+    }
+    
+    /**
+     * Suma el peso al peso total
      */
     public void setPesoBolsa(float peso) {
         pesoBolsa += peso;
@@ -181,11 +197,11 @@ public class Player
      * Muestra la lista de los items de player
      */
     public String getItemDescription() {
-        String itemDescription = "peso que lleva el jugador: " + getPesoBolsa() + ".\n" + "You have: " + "\n";
+        String itemDescription = "Peso que lleva el jugador: " + pesoBolsa + "La resistencia del jugador: " + resistencia + ".\n" + "You have: " + "\n";
         System.out.print("");
         if (listPlayer.size() != 0){
             for(Item object : listPlayer){
-                itemDescription += "Nombre del objeto: " + object.getDescriptionItem() + " Peso: " + object.getPeso() + ".\n";
+                itemDescription += "Nombre del objeto: " + object.getDescriptionItem() + " Peso: " + object.getPeso() + " Resistencia del item:" + object.getResistencia() + ".\n";
             }
         }
         else{
@@ -203,13 +219,6 @@ public class Player
             listPlayer.remove(item);
         }
         return itemDrop;
-    }
-    
-    /**
-     * Tamaño del stack
-     */
-    public int tamaño(){
-        return salasAnteriores.size();
     }
     
 }
