@@ -1,0 +1,7 @@
+1.- Implementar a player una variable que almacene la resistencia que disminuya cada vez que se mueva de room
+y usar el comando ya creado "eat" para que aumente. Si el jugador se queda sin resistencia no se podra mover a ninguna 
+habitacion. Cuando no tenga suficiente resistencia termina el juego.
+
+2.- Para llegar a la ultima sala debera buscar un item llamado "llave" que permita atravesar la ultima room. El jugador 
+la debera llevar equipada en su bolsa para poder abrir la puerta. Si consigue pasar y llegar a la ultima habitacion
+acabaria el juego.

@@ -10,8 +10,9 @@ public class Player
 {
     // instance variables - replace the example below with your own
     private ArrayList<Item> listPlayer;
-    public static final float limitePeso = 150;
+    public static final float limitePeso = 100;
     private float pesoBolsa;
+    private int resistencia;
     private Room currentRoom;
     private Stack<Room> salasAnteriores;
 
@@ -22,6 +23,7 @@ public class Player
     {
         listPlayer = new ArrayList<Item>();
         pesoBolsa = 0;
+        resistencia = 70;
         salasAnteriores = new Stack<>();
         this.currentRoom = currentRoom; 
     }
@@ -34,7 +36,28 @@ public class Player
     }
     
     /**
-     * Fija el valor del peso del player
+     * Devuelve la resistencia que tiene el jugador
+     */
+    public int getResistencia(){
+        return resistencia;
+    }
+    
+    /**
+     * Le suma la resistencia a la resistencia del jugador
+     */
+    public void aumentoResistencia(int resistenciaAñadida){
+        resistencia += resistenciaAñadida;
+    }
+    
+    /**
+     * Resta la resistencia a la que tiene el jugador
+     */
+    public void restoResistencia(int resistenciaRestada){
+        resistencia -= resistenciaRestada;
+    }
+    
+    /**
+     * Suma el peso al peso total
      */
     public void setPesoBolsa(float peso) {
         pesoBolsa += peso;
@@ -84,11 +107,15 @@ public class Player
         if (nextRoom == null) {
             System.out.println("There is no door!");
         }
+        else if(resistencia <= 5) {
+            System.out.println("Te has quedado sin resistencia");
+        }
         else {
             salasAnteriores.push(currentRoom);
             currentRoom = nextRoom;
             printLocalitationInfo();
             System.out.println();
+            restoResistencia(10);
         }
     }
     
@@ -158,6 +185,49 @@ public class Player
     }
     
     /**
+     * Aumenta la resistencia al jugador
+     * al comer un objeto se elimina de la bolsa y se añade la resistencia
+     */
+    public void eat(Command command){
+        if(!command.hasSecondWord()) {
+            // if there is no second word, we don't know where to go...
+            System.out.println("Coger que?");
+            return;
+        }
+        
+        String descriptionItem = command.getSecondWord();
+        
+        Item item = findItem(descriptionItem);
+        
+        if (item == null) {
+            System.out.println("El jugador no tiene ningun item en la bolsa");
+        }
+        else if (item.getResistencia() == 0){
+            System.out.println("Este item no se puede comer");
+        }
+        else {
+            removeItem(item);
+            aumentoResistencia(item.getResistencia());
+        }
+    }
+    
+    /** 
+     * "Quit" was entered. Check the rest of the command to see
+     * whether we really quit the game.
+     * @return true, if this command quits the game, false otherwise.
+     */
+    public boolean quit(Command command) 
+    {
+        if(command.hasSecondWord()) {
+            System.out.println("Quit what?");
+            return false;
+        }
+        else {
+            return true;  // signal that we want to quit
+        }
+    }
+    
+    /**
      * metodo que imprime la informacion
      */
     public void printLocalitationInfo(){
@@ -181,11 +251,11 @@ public class Player
      * Muestra la lista de los items de player
      */
     public String getItemDescription() {
-        String itemDescription = "peso que lleva el jugador: " + getPesoBolsa() + ".\n" + "You have: " + "\n";
+        String itemDescription = "Peso que lleva el jugador: " + pesoBolsa + "La resistencia del jugador: " + resistencia + ".\n" + "You have: " + "\n";
         System.out.print("");
         if (listPlayer.size() != 0){
             for(Item object : listPlayer){
-                itemDescription += "Nombre del objeto: " + object.getDescriptionItem() + " Peso: " + object.getPeso() + ".\n";
+                itemDescription += "Nombre del objeto: " + object.getDescriptionItem() + " Peso: " + object.getPeso() + " Resistencia del item:" + object.getResistencia() + ".\n";
             }
         }
         else{
@@ -195,7 +265,7 @@ public class Player
     }
     
     /**
-     * Borra el item de la lista de item del jugador
+     * Borra el item de la lista de item del jugador y lo devuelve
      */
     public Item dropItem(Item item) {
         Item itemDrop = item;
@@ -203,5 +273,14 @@ public class Player
             listPlayer.remove(item);
         }
         return itemDrop;
+    }
+    
+    /**
+     * Borra el item de la lista de item del jugador
+     */
+    private void removeItem(Item item) {
+        if (item != null) {
+            listPlayer.remove(item);
+        }
     }
 }

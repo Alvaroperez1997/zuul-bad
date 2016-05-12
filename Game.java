@@ -35,22 +35,27 @@ public class Game
      */
     private void createRooms()
     {
-        Room entrada, sala1, sala2, sala3, sala4, sala5, salida;
+        Room entrada, sala1, sala2, sala3, sala4, sala5, sala6, sala7, salida;
         
         // create the rooms and items
         entrada = new Room("Entrada de la cueva");
         sala1 = new Room("Primera sala");
-        sala1.addItem(new Item("espada", 50, false));
-        sala1.addItem(new Item("armadura", 80, false));
+        sala1.addItem(new Item("espada", 50, false, 0));
+        sala1.addItem(new Item("armadura", 80, false, 0));
         sala2 = new Room("Segunda sala");
-        sala2.addItem(new Item("escudo", 60, false));
+        sala2.addItem(new Item("escudo", 60, false, 0));
         sala3 = new Room("Tercera sala");
+        sala3.addItem(new Item("corazon", 5, false, 40));
         sala4 = new Room("Cuarta sala");
-        sala4.addItem(new Item("vara", 20, true));
+        sala4.addItem(new Item("vara", 20, true, 0));
         sala5 = new Room("Quinta sala");
-        sala5.addItem(new Item("pocion", 5, false));
-        sala5.addItem(new Item("amuleto", 6, false));
-        salida = new Room("Has llegado a la ultima sala donde esta el jefe final");
+        sala5.addItem(new Item("pocion", 5, false, 20));
+        sala5.addItem(new Item("amuleto", 6, false, 0));
+        sala6 = new Room("Sexta sala");
+        sala6.addItem(new Item("galleta", 5, false, 10));
+        sala7 = new Room("Septima sala");
+        sala7.addItem(new Item("llave", 4, false, 0));
+        salida = new Room("Salida de la cueva");
         
         // initialise room exits
         entrada.setExits("north", sala1);
@@ -64,11 +69,17 @@ public class Game
         sala3.setExits("east", sala4);
         sala3.setExits("south", sala5);
         sala3.setExits("west", sala2);
-        sala4.setExits("north", salida);
+        sala4.setExits("north", sala6);
         sala4.setExits("west", sala3);
+        sala4.setExits("east", salida);
+        sala4.setExits("southwest", sala5);
         sala5.setExits("north", sala3);
         sala5.setExits("northeast", sala4);
-        salida.setExits("south", sala4);
+        sala5.setExits("northwest", sala2);
+        sala6.setExits("south", sala4);
+        sala6.setExits("southwest", sala3);
+        sala6.setExits("north", sala7);
+        sala7.setExits("south", sala6);
 
         player = new Player(entrada); //Crea el jugador
     }
@@ -82,11 +93,22 @@ public class Game
 
         // Enter the main command loop.  Here we repeatedly read commands and
         // execute them until the game is over.
+        String ultimaSala = "Salida de la cueva";
+        boolean win = false;
+        boolean lose = false;
                 
         boolean finished = false;
-        while (! finished) {
+        while (!finished && !win && !lose) {
             Command command = parser.getCommand();
             finished = processCommand(command);
+            if (player.getCurrentRoom().getDescription().equals(ultimaSala)){
+                win = true;
+                System.out.println("Has acabado el juego. Enhorabuena¡¡");
+            }
+            if (player.getResistencia() <= 5) {
+                lose = true;
+                System.out.println("Te has quedado sin resistencia. Has perdido.");
+            }
         }
         System.out.println("Thank you for playing.  Good bye.");
     }
@@ -127,7 +149,7 @@ public class Game
                 break;
             case BACK: player.goBack();
                 break;
-            case QUIT: wantToQuit = quit(command);
+            case QUIT: wantToQuit = player.quit(command);
                 break;
             case LOOK: System.out.print(player.getCurrentRoom().getLongDescription());
                 break;
@@ -157,21 +179,5 @@ public class Game
         System.out.println();
         System.out.println("Your command words are:");
         parser.getAllCommands();
-    }
-
-    /** 
-     * "Quit" was entered. Check the rest of the command to see
-     * whether we really quit the game.
-     * @return true, if this command quits the game, false otherwise.
-     */
-    private boolean quit(Command command) 
-    {
-        if(command.hasSecondWord()) {
-            System.out.println("Quit what?");
-            return false;
-        }
-        else {
-            return true;  // signal that we want to quit
-        }
     }
 }
