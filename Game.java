@@ -55,7 +55,7 @@ public class Game
         sala6.addItem(new Item("galleta", 5, false, 10));
         sala7 = new Room("Septima sala");
         sala7.addItem(new Item("llave", 4, false, 0));
-        salida = new Room("Has llegado a la ultima. Se ha acabado el juego");
+        salida = new Room("Salida de la cueva");
         
         // initialise room exits
         entrada.setExits("north", sala1);
@@ -93,11 +93,22 @@ public class Game
 
         // Enter the main command loop.  Here we repeatedly read commands and
         // execute them until the game is over.
+        String ultimaSala = "Salida de la cueva";
+        boolean win = false;
+        boolean lose = false;
                 
         boolean finished = false;
-        while (! finished) {
+        while (!finished && !win && !lose) {
             Command command = parser.getCommand();
             finished = processCommand(command);
+            if (player.getCurrentRoom().getDescription().equals(ultimaSala)){
+                win = true;
+                System.out.println("Has acabado el juego. Enhorabuena¡¡");
+            }
+            if (player.getResistencia() <= 5) {
+                lose = true;
+                System.out.println("Te has quedado sin resistencia. Has perdido.");
+            }
         }
         System.out.println("Thank you for playing.  Good bye.");
     }
@@ -138,7 +149,7 @@ public class Game
                 break;
             case BACK: player.goBack();
                 break;
-            case QUIT: wantToQuit = quit(command);
+            case QUIT: wantToQuit = player.quit(command);
                 break;
             case LOOK: System.out.print(player.getCurrentRoom().getLongDescription());
                 break;
@@ -168,21 +179,5 @@ public class Game
         System.out.println();
         System.out.println("Your command words are:");
         parser.getAllCommands();
-    }
-
-    /** 
-     * "Quit" was entered. Check the rest of the command to see
-     * whether we really quit the game.
-     * @return true, if this command quits the game, false otherwise.
-     */
-    private boolean quit(Command command) 
-    {
-        if(command.hasSecondWord()) {
-            System.out.println("Quit what?");
-            return false;
-        }
-        else {
-            return true;  // signal that we want to quit
-        }
     }
 }
