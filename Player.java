@@ -23,7 +23,7 @@ public class Player
     {
         listPlayer = new ArrayList<Item>();
         pesoBolsa = 0;
-        resistencia = 70;
+        resistencia = 100;
         salasAnteriores = new Stack<>();
         this.currentRoom = currentRoom; 
     }
@@ -105,10 +105,13 @@ public class Player
         Room nextRoom = currentRoom.getExit(direction);
 
         if (nextRoom == null) {
-            System.out.println("There is no door!");
+            System.out.println("Hay una puerta, no puedes pasar!");
         }
         else if(resistencia <= 5) {
             System.out.println("Te has quedado sin resistencia");
+        }
+        else if(findItem("llave") == null && nextRoom.getDescription().equals("Salida de la cueva") ) {
+            System.out.println("No puedes pasar, no has encontrado la llave");
         }
         else {
             salasAnteriores.push(currentRoom);
