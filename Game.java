@@ -153,7 +153,7 @@ public class Game
                 break;
             case LOOK: System.out.print(player.getCurrentRoom().getLongDescription());
                 break;
-            case EAT: System.out.println("You have eaten now and you are not hungry any more");
+            case EAT: player.eat(command);
                 break;
             case TAKE: player.takeItem(command);
                 break;
